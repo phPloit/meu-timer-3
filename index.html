@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Timer Foguete 🚀</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Painel de configuração */
+    .config {
+      background: #111;
+      padding: 15px 10px;
+      text-align: center;
+      border-bottom: 2px solid #222;
+    }
+
+    .config input, .config button {
+      padding: 10px;
+      font-size: 1rem;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .config input {
+      background: #222;
+      color: white;
+    }
+
+    .config button {
+      background: #444;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .config button:hover {
+      background: #666;
+    }
+
+    /* Área do timer */
+    #timer {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      font-size: 5vw; /* tamanho responsivo */
+      font-weight: bold;
+      padding: 10px;
+    }
+
+    /* Foguete / barra de progresso */
+    .progress-container {
+      width: 90%;
+      max-width: 600px;
+      height: 40px;
+      background: #222;
+      border-radius: 20px;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rocket {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem; /* tamanho do foguete */
+      transition: left 1s linear;
+    }
+
+    /* Responsividade para celular */
+    @media (max-width: 600px) {
+      #timer {
+        font-size: 8vw;
+      }
+      .rocket {
+        font-size: 4vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Painel de configuração -->
+  <div class="config">
+    <label for="dateInput">Escolha a data e hora:</label><br>
+    <input type="datetime-local" id="dateInput">
+    <button onclick="startTimer()">Iniciar</button>
+    <button onclick="resetTimer()">Resetar</button>
+  </div>
+
+  <!-- Timer e foguete -->
+  <div id="timer">
+    <div id="countdown"></div>
+    <div class="progress-container">
+      <div class="rocket" id="rocket">🚀</div>
+    </div>
+  </div>
+
+  <script>
+    let interval;
+    let totalTime;
+
+    function startTimer() {
+      clearInterval(interval);
+      const input = document.getElementById("dateInput").value;
+      if (!input) {
+        alert("Por favor, escolha uma data e hora!");
+        return;
+      }
+
+      const targetDate = new Date(input).getTime();
+      const now = new Date().getTime();
+      totalTime = targetDate - now;
+
+      if (totalTime <= 0) {
+        alert("Escolha uma data/hora futura!");
+        return;
+      }
+
+      localStorage.setItem("targetDate", targetDate);
+      runTimer(targetDate);
+    }
+
+    function runTimer(targetDate) {
+      function updateTimer() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance <= 0) {
+          document.getElementById("countdown").innerText = "⏰ Tempo esgotado!";
+          document.getElementById("rocket").style.left = "100%";
+          clearInterval(interval);
+          localStorage.removeItem("targetDate");
+          return;
+        }
+
+        // Atualiza o timer
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerText =
+          `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // Atualiza posição do foguete
+        const elapsed = totalTime - distance;
+        const percent = Math.min((elapsed / totalTime) * 100, 100);
+        document.getElementById("rocket").style.left = percent + "%";
+      }
+
+      updateTimer();
+      interval = setInterval(updateTimer, 1000);
+    }
+
+    function resetTimer() {
+      clearInterval(interval);
+      localStorage.removeItem("targetDate");
+      document.getElementById("countdown").innerText = "";
+      document.getElementById("rocket").style.left = "0%";
+      document.getElementById("dateInput").value = "";
+    }
+
+    window.onload = function() {
+      const savedDate = localStorage.getItem("targetDate");
+      if (savedDate) {
+        const targetDate = parseInt(savedDate);
+        document.getElementById("dateInput").value =
+          new Date(targetDate).toISOString().slice(0,16);
+
+        const now = new Date().getTime();
+        totalTime = targetDate - now;
+        if (totalTime > 0) {
+          runTimer(targetDate);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
