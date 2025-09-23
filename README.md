@@ -35,16 +35,7 @@ Ele permite definir uma **data e hora futura** e acompanhar a contagem regressiv
 
 > O timer continuará funcionando mesmo se você **recarregar a página**, graças ao armazenamento local.
 
----
 
-## 🛠️ Como publicar ou modificar
-
-1. Clone ou faça fork do repositório.  
-2. Edite o arquivo `index.html` com o código desejado.  
-3. Faça push das alterações para o GitHub.  
-4. O site será atualizado automaticamente no GitHub Pages.
-
----
 
 ## 🎨 Tecnologias usadas
 
@@ -53,9 +44,4 @@ Ele permite definir uma **data e hora futura** e acompanhar a contagem regressiv
 - JavaScript (vanilla)  
 - LocalStorage para persistência do timer
 
----
 
-## 📱 Compatibilidade
-
-Funciona em qualquer navegador moderno, tanto em **desktop quanto em dispositivos móveis**.  
-Para uma experiência ainda melhor em celulares, você pode **salvar o site na tela inicial**, como um app.  
