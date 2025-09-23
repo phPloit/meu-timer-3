@@ -15,9 +15,6 @@ Ele permite definir uma **data e hora futura** e acompanhar a contagem regressiv
 
 [Clique aqui para abrir o timer](https://phploit.github.io/meu-timer-3/)  
 
-> Substitua `SEU-USUARIO` e `NOME-DO-REPOSITORIO` pelo link do seu repositório no GitHub Pages.
-
----
 
 ## 🖤 Layout e funcionalidades
 
