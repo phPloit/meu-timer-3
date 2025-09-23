@@ -1,7 +1,7 @@
 # Timer Foguete 🚀
 
 Este é um **timer de contagem regressiva online**, moderno e interativo.  
-Ele permite definir uma **data e hora futura** e acompanha a contagem regressiva com:
+Ele permite definir uma **data e hora futura** e acompanhar a contagem regressiva com:
 
 - Contagem de **dias, horas, minutos e segundos**.  
 - **Foguete animado** que se move da esquerda para a direita conforme o tempo passa.  
